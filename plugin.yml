@@ -3,3 +3,8 @@ description: PMMPのバックアッププラグイン
 version: 1.0.0
 api: 4.0.0
 main: Ken_Cir\Backup\Backup
+
+permissions:
+  backup.command:
+    description: Backup Command Permission
+    default: op

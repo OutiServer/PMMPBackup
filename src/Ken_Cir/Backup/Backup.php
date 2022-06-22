@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Ken_Cir\Backup;
 
+use Ken_Cir\Backup\Commands\BackupCommand;
 use Ken_Cir\Backup\Tasks\ZipBackupAsyncTask;
 use pocketmine\plugin\PluginBase;
 use pocketmine\scheduler\ClosureTask;
@@ -44,6 +45,10 @@ class Backup extends PluginBase
             }
         }
 
+        if (!file_exists( "{$this->getDataFolder()}backups/")) {
+            mkdir("{$this->getDataFolder()}backups/");
+        }
+
         $this->saveResource("config.yml");
         $this->config = new Config("{$this->getDataFolder()}config.yml", Config::YAML);
 
@@ -52,6 +57,10 @@ class Backup extends PluginBase
                 $this->getServer()->getAsyncPool()->submitTask(new ZipBackupAsyncTask($this->getDataFolder(), $this->getServer()->getFilePath()));
             }),
             $this->getConfig()->get("interval", 60) * 60 * 20);
+
+        $this->getServer()->getCommandMap()->registerAll($this->getName(), [
+            new BackupCommand($this, "backup", "バックアップを作成する", []),
+        ]);
     }
 
     public function getConfig(): Config

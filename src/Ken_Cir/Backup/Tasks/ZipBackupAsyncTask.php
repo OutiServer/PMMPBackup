@@ -40,7 +40,8 @@ class ZipBackupAsyncTask extends AsyncTask
     public function onRun(): void
     {
         $zip = new ZipArchive();
-        if ($zip->open("{$this->backupFolder}backups/" . date("Y-m-d-H-i-s") . ".backup.zip", ZipArchive::CREATE)) {
+        var_dump("{$this->backupFolder}backups/");
+        if ($zip->open("{$this->backupFolder}backups/" . date("Y-m-d-H-i-s") . ".backup.zip", ZipArchive::CREATE) === true) {
             $files = BackupUtil::getFiles($this->pmmpPath);
             foreach ($files as $file) {
                 $zip->addFile($file);
@@ -49,6 +50,12 @@ class ZipBackupAsyncTask extends AsyncTask
             if (!@$zip->close()) {
                 $this->setResult(false);
             }
+            else {
+                $this->setResult(true);
+            }
+        }
+        else {
+            $this->setResult(false);
         }
     }
 
@@ -82,6 +89,9 @@ class ZipBackupAsyncTask extends AsyncTask
                 Backup::getInstance()->getLogger()->error("バックアップの作成に失敗しました");
                 Backup::getInstance()->setTryCounter(0);
             }
+        }
+        else {
+            Backup::getInstance()->getLogger()->info("バックアップを作成しました");
         }
     }
 }
