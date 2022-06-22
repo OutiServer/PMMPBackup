@@ -9,10 +9,10 @@ class BackupUtil
     /**
      * ディレクトリ内のファイルやフォルダを再帰的に取得する
      *
-     * @param $dir
+     * @param string $dir
      * @return string[]
      */
-    public static function getFiles($dir): array
+    public static function getFiles(string $dir): array
     {
         $files = glob(rtrim($dir, '/') . '/*');
         $list = array();
