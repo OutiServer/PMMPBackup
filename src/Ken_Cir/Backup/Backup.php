@@ -54,7 +54,7 @@ class Backup extends PluginBase
 
         $this->getScheduler()->scheduleRepeatingTask(new ClosureTask(
             function (): void {
-                $this->getServer()->getAsyncPool()->submitTask(new ZipBackupAsyncTask($this->getDataFolder(), $this->getServer()->getFilePath()));
+                $this->getServer()->getAsyncPool()->submitTask(new ZipBackupAsyncTask($this->getDataFolder(), $this->getServer()->getDataPath()));
             }),
             $this->getConfig()->get("interval", 60) * 60 * 20);
 

@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Ken_Cir\Backup\Tasks;
 
 use Ken_Cir\Backup\Backup;
-use Ken_Cir\Backup\Utils\BackupUtil;
 use pocketmine\scheduler\AsyncTask;
 use pocketmine\scheduler\ClosureTask;
 use pocketmine\Server;
@@ -41,12 +40,9 @@ class ZipBackupAsyncTask extends AsyncTask
     {
         $zip = new ZipArchive();
         if ($zip->open("{$this->backupFolder}backups/" . date("Y-m-d-H-i-s") . ".backup.zip", ZipArchive::CREATE) === true) {
-            $files = BackupUtil::getFiles($this->pmmpPath);
-            foreach ($files as $file) {
-                $zip->addFile($file);
-            }
-
-            if (!$reslt = @$zip->close()) {
+            var_dump($this->pmmpPath);
+            $this->zipSub($zip, $this->pmmpPath);
+            if (!@$zip->close()) {
                 $this->setResult(false);
             }
             else {
@@ -92,5 +88,24 @@ class ZipBackupAsyncTask extends AsyncTask
         else {
             Backup::getInstance()->getLogger()->info("バックアップを作成しました");
         }
+    }
+
+    private function zipSub(ZipArchive $zip, string $path, string $parentPath = '')
+    {
+        $dir = opendir($path);
+        while (($entry = readdir($dir)) !== false) {
+            // ここでbackupを除外しないと疑似無限ループになるので
+            if ($entry == '.' || $entry == '..' || str_ends_with($entry, "backup") || str_ends_with($entry, "backup.zip")) continue;
+            else {
+                $localPath = "$parentPath$entry";
+                $fullpath = "$path/$entry";
+                if (is_file($fullpath)) {
+                    $zip->addFile($fullpath, "$localPath");
+                } elseif (is_dir($fullpath)) {
+                    $this->zipSub($zip, $fullpath, $localPath . '/');
+                }
+            }
+        }
+        closedir($dir);
     }
 }
