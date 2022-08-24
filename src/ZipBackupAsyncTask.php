@@ -2,9 +2,8 @@
 
 declare(strict_types=1);
 
-namespace Ken_Cir\Backup\Tasks;
+namespace outiserver\backup;
 
-use Ken_Cir\Backup\Backup;
 use pocketmine\scheduler\AsyncTask;
 use pocketmine\scheduler\ClosureTask;
 use pocketmine\Server;

@@ -2,10 +2,8 @@
 
 declare(strict_types=1);
 
-namespace Ken_Cir\Backup;
+namespace outiserver\backup;
 
-use Ken_Cir\Backup\Commands\BackupCommand;
-use Ken_Cir\Backup\Tasks\ZipBackupAsyncTask;
 use pocketmine\plugin\PluginBase;
 use pocketmine\scheduler\ClosureTask;
 use pocketmine\utils\Config;

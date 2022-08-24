@@ -2,11 +2,9 @@
 
 declare(strict_types=1);
 
-namespace Ken_Cir\Backup\Commands;
+namespace outiserver\backup;
 
 use CortexPE\Commando\BaseCommand;
-use Ken_Cir\Backup\Backup;
-use Ken_Cir\Backup\Tasks\ZipBackupAsyncTask;
 use pocketmine\command\CommandSender;
 use pocketmine\Server;
 

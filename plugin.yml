@@ -2,7 +2,8 @@ name: Backup
 description: PMMPのバックアッププラグイン
 version: 1.0.0
 api: 4.0.0
-main: Ken_Cir\Backup\Backup
+main: outiserver\backup\Backup
+src-namespace-prefix: outiserver\backup
 
 permissions:
   backup.command:

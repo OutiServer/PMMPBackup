@@ -1,10 +1,10 @@
 {
-  "name": "ken_cir/backup",
+  "name": "outiserver/backup",
   "description": "PMMP経済プラグインCORE",
   "license": "MIT",
   "autoload": {
     "psr-4": {
-      "": "src/"
+      "outiserver/backup": "src/"
     }
   },
   "require-dev": {
