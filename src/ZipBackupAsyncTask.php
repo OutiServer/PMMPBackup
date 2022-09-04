@@ -39,7 +39,6 @@ class ZipBackupAsyncTask extends AsyncTask
     {
         $zip = new ZipArchive();
         if ($zip->open("{$this->backupFolder}backups/" . date("Y-m-d-H-i-s") . ".backup.zip", ZipArchive::CREATE) === true) {
-            var_dump($this->pmmpPath);
             $this->zipSub($zip, $this->pmmpPath);
             if (!@$zip->close()) {
                 $this->setResult(false);
