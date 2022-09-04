@@ -7,7 +7,4 @@ projects:
     path: ""
     lint:
       phpstan: false
-    libs:
-      - src: KenCir/Commando/Commando
-        version: ^3.1.0
 ...
