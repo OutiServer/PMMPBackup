@@ -62,7 +62,7 @@ class ZipBackupAsyncTask extends AsyncTask
         if (!$this->getResult()) {
             Backup::getInstance()->getLogger()->error("バックアップの作成に失敗しました");
         } else {
-            Backup::getInstance()->getLogger()->info("バックアップを作成しました、作成先: $this->backupPath");
+            Backup::getInstance()->getLogger()->info("バックアップ(ZIP)を作成しました、作成先: $this->backupPath");
         }
     }
 
