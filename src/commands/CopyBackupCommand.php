@@ -2,9 +2,10 @@
 
 declare(strict_types=1);
 
-namespace outiserver\backup;
+namespace outiserver\backup\commands;
 
-use CortexPE\Commando\BaseCommand;
+use outiserver\backup\Backup;
+use outiserver\backup\tasks\CopyBackupAsyncTask;
 use pocketmine\command\Command;
 use pocketmine\command\CommandSender;
 use pocketmine\lang\Translatable;
@@ -12,7 +13,7 @@ use pocketmine\plugin\Plugin;
 use pocketmine\plugin\PluginOwned;
 use pocketmine\Server;
 
-class BackupCommand extends Command implements PluginOwned
+class CopyBackupCommand extends Command implements PluginOwned
 {
     private Plugin $plugin;
 
@@ -26,12 +27,11 @@ class BackupCommand extends Command implements PluginOwned
 
     public function getOwningPlugin(): Plugin
     {
-        return  $this->plugin;
+        return $this->plugin;
     }
 
     public function execute(CommandSender $sender, string $commandLabel, array $args)
     {
-        $sender->sendMessage("バックアップを開始しています...");
-        Server::getInstance()->getAsyncPool()->submitTask(new ZipBackupAsyncTask(Backup::getInstance()->getDataFolder(), Server::getInstance()->getDataPath()));
+        Server::getInstance()->getAsyncPool()->submitTask(new CopyBackupAsyncTask(Backup::getInstance()->getDataFolder(), Server::getInstance()->getDataPath()));
     }
 }
