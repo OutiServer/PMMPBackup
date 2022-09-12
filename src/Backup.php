@@ -45,8 +45,9 @@ class Backup extends PluginBase
         $this->config = new Config("{$this->getDataFolder()}config.yml", Config::YAML);
 
         if ($this->config->get("mode") !== "zip" and $this->config->get("mode") !== "copy") {
-            $this->config->set("mode", "zip");
+            $this->config->set("mode", "copy");
             $this->config->save();
+            $this->getLogger()->warning("Configのmodeの設定値が不正だったため、上書きしました");
         }
 
         $this->getScheduler()->scheduleRepeatingTask(new ClosureTask(
